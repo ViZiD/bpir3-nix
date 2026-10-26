@@ -33,7 +33,14 @@ jobs:
 
       - name: Build kernel and bootloader
         run: |
-          nix build -L \
-            .#packages.aarch64-linux.kernel \
-            .#packages.aarch64-linux.kernelModules \
-            .#packages.aarch64-linux.uboot
+          nix build -L --out-link result-kernel .#packages.aarch64-linux.kernel
+          nix build -L --out-link result-modules .#packages.aarch64-linux.kernelModules
+          nix build -L --out-link result-uboot .#packages.aarch64-linux.uboot
+
+      - name: Push to Cachix
+        if: github.event_name != 'pull_request'
+        run: |
+          cachix push bpir3-nix \
+            "$(readlink -f result-kernel)" \
+            "$(readlink -f result-modules)" \
+            "$(readlink -f result-uboot)"
