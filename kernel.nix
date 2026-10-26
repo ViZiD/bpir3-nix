@@ -1,6 +1,6 @@
 { pkgs, lib }:
 let
-  kernel = pkgs.linuxPackages_latest.kernel.override {
+  kernel = pkgs.linuxPackages_7_2.kernel.override {
     kernelPatches = [
       {
         name = "avoid-crashing-missing-band.patch";
