@@ -22,8 +22,6 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes
 
-      - uses: DeterminateSystems/magic-nix-cache-action@main
-
       - uses: cachix/cachix-action@v15
         with:
           name: bpir3-nix
